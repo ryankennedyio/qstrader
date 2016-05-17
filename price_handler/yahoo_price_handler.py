@@ -1,5 +1,4 @@
 import datetime
-from decimal import Decimal, getcontext, ROUND_HALF_DOWN
 import os, os.path
 
 import pandas as pd
@@ -71,12 +70,8 @@ class YahooDailyBarPriceHandler(PriceHandler):
                 dft = self.tickers_data[ticker]
                 row0 = dft.iloc[0]
                 ticker_prices = {
-                    "close": Decimal(
-                        str(row0["Close"])
-                    ).quantize(Decimal("0.00001")), 
-                    "adj_close": Decimal(
-                        str(row0["Adj Close"])
-                    ).quantize(Decimal("0.00001")), 
+                    "close": row0["Close"],
+                    "adj_close": row0["Adj Close"], 
                     "timestamp": dft.index[0]
                 }
                 self.tickers[ticker] = ticker_prices
@@ -116,16 +111,15 @@ class YahooDailyBarPriceHandler(PriceHandler):
             return
         
         # Obtain all elements of the bar from the dataframe
-        getcontext().rounding = ROUND_HALF_DOWN
         ticker = row["Ticker"]
-        open_price = Decimal(str(row["Open"])).quantize(Decimal("0.00001"))
-        high_price = Decimal(str(row["High"])).quantize(Decimal("0.00001"))
-        low_price = Decimal(str(row["Low"])).quantize(Decimal("0.00001"))
-        close_price = Decimal(str(row["Close"])).quantize(Decimal("0.00001"))
-        adj_close_price = Decimal(str(row["Adj Close"])).quantize(Decimal("0.00001"))
+        open_price = row["Open"]
+        high_price = row["High"]
+        low_price = row["Low"]
+        close_price = row["Close"]
+        adj_close_price = row["Adj Close"]
         volume = int(row["Volume"])
 
-        # Create decimalised prices for 
+        # Create prices for 
         # closing price and adjusted closing price
         self.tickers[ticker]["close"] = close_price
         self.tickers[ticker]["adj_close"] = adj_close_price

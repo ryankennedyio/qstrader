@@ -1,7 +1,6 @@
 from __future__ import print_function
 
 import datetime
-from decimal import Decimal, getcontext, ROUND_HALF_DOWN
 import os, os.path
 
 import pandas as pd
@@ -95,8 +94,8 @@ class HistoricCSVPriceHandler(PriceHandler):
                 dft = self.tickers_data[ticker]
                 row0 = dft.iloc[0]
                 ticker_prices = {
-                    "bid": Decimal(str(row0["Bid"])), 
-                    "ask": Decimal(str(row0["Ask"])), 
+                    "bid": row0["Bid"],
+                    "ask": row0["Ask"],
                     "timestamp": dft.index[0]
                 }
                 self.tickers[ticker] = ticker_prices
@@ -135,15 +134,10 @@ class HistoricCSVPriceHandler(PriceHandler):
         except StopIteration:
             self.continue_backtest = False
             return
-        
-        getcontext().rounding = ROUND_HALF_DOWN
+
         ticker = row["Ticker"]
-        bid = Decimal(str(row["Bid"])).quantize(
-            Decimal("0.00001")
-        )
-        ask = Decimal(str(row["Ask"])).quantize(
-            Decimal("0.00001")
-        )
+        bid = row["Bid"]
+        ask = row["Ask"]
 
         # Create decimalised prices for traded pair
         self.tickers[ticker]["bid"] = bid

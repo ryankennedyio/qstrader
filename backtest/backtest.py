@@ -1,6 +1,5 @@
 from __future__ import print_function
 
-from decimal import Decimal
 import os, os.path
 import pprint
 from qstrader.statistics.statistics import Statistics
@@ -30,7 +29,7 @@ class Backtest(object):
         strategy, portfolio_handler, 
         execution_handler, 
         position_sizer, risk_manager,
-        equity=Decimal("100000.00"), 
+        equity=100000.00,
         heartbeat=0.0, max_iters=10000000000
     ):
         """
@@ -136,4 +135,3 @@ class Backtest(object):
         statistics = Statistics()
         statistics.generate_results()
         statistics.plot_results()
-        
