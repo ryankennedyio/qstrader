@@ -115,20 +115,20 @@ class Position(object):
                     )/(self.buys + quantity)
                 )
             self.buys += quantity
-            self.total_bot = (self.buys * self.avg_bot).quantize(TWOPLACES)
+            self.total_bot = (self.buys * self.avg_bot)
 
         # action == "SLD"
         else:
             self.avg_sld = (
                 (self.avg_sld*self.sells + price*quantity)/(self.sells + quantity)
-            ).quantize(FIVEPLACES)
+            )
             if self.action != "BOT":
                 self.avg_price = (
                     (
                         self.avg_price*self.sells +
                         price*quantity-commission
                     )/(self.sells + quantity)
-                ).quantize(FIVEPLACES)
+                )
             self.sells += quantity
             self.total_sld = (self.sells * self.avg_sld)
 

@@ -1,5 +1,3 @@
-from decimal import Decimal
-
 from qstrader.backtest.backtest import Backtest
 from qstrader.execution_handler.execution_handler import IBSimulatedExecutionHandler
 from qstrader.portfolio_handler.portfolio_handler import PortfolioHandler
@@ -18,6 +16,6 @@ if __name__ == "__main__":
         MovingAverageCrossStrategy, PortfolioHandler, 
         IBSimulatedExecutionHandler,
         TestPositionSizer, TestRiskManager, 
-        equity=Decimal("500000.00")
+        equity=500000.00
     )
     backtest.simulate_trading()
