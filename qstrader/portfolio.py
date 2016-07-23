@@ -39,13 +39,13 @@ class Portfolio(object):
         """
         for ticker in self.positions:
             pt = self.positions[ticker]
-            if self.price_handler.istick():
+            if self.price_handler.istick():                                     #0.682s
                 bid, ask = self.price_handler.get_best_bid_ask(ticker)
             else:
-                close_price = self.price_handler.get_last_close(ticker)
+                close_price = self.price_handler.get_last_close(ticker)         #2s
                 bid = close_price
                 ask = close_price
-            pt.update_market_value(bid, ask)
+            pt.update_market_value(bid, ask)                                    #4s
             self.unrealised_pnl += pt.unrealised_pnl
             self.realised_pnl += pt.realised_pnl
             self.cur_cash -= pt.cost_basis
